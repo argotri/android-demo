@@ -2,6 +2,8 @@ package org.example;
 
 import static org.junit.Assert.assertTrue;
 
+import io.appium.java_client.service.local.AppiumDriverLocalService;
+import io.appium.java_client.service.local.AppiumServiceBuilder;
 import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.BeforeClass;
@@ -22,9 +24,16 @@ import java.util.concurrent.TimeUnit;
 public class AppTest 
 {
     static WebDriver driver;
+    static AppiumServiceBuilder serviceBuilder;
+    static AppiumDriverLocalService server;
 
     @BeforeClass
     public static void setUp() throws MalformedURLException {
+
+        serviceBuilder = new AppiumServiceBuilder();
+        serviceBuilder.usingAnyFreePort();
+        server = AppiumDriverLocalService.buildService(serviceBuilder);
+        server.start();
 
         //Created object of DesiredCapabilities class
         DesiredCapabilities capabilities = new DesiredCapabilities();
@@ -45,7 +54,7 @@ public class AppTest
         capabilities.setCapability("appActivity", "com.android.calculator2.Calculator");
 
         // Initialize the driver object with the URL to Appium Server and pass capabilities
-        driver = new RemoteWebDriver(new URL("http://127.0.0.1:4723/wd/hub"), capabilities);
+        driver = new RemoteWebDriver(server.getUrl(), capabilities);
         driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
     }
 
