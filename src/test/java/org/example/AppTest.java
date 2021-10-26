@@ -78,6 +78,9 @@ public class AppTest
 
     @AfterClass
     public static void End() {
-        driver.quit();
+        try {
+            driver.quit();
+        } catch (Exception ign) {}
+        server.stop();
     }
 }
