@@ -1,9 +1,6 @@
 package org.example;
 
-import static org.junit.Assert.assertTrue;
-
-import io.appium.java_client.service.local.AppiumDriverLocalService;
-import io.appium.java_client.service.local.AppiumServiceBuilder;
+import io.appium.java_client.android.AndroidDriver;
 import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.BeforeClass;
@@ -16,24 +13,18 @@ import org.openqa.selenium.remote.RemoteWebDriver;
 
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.HashMap;
 import java.util.concurrent.TimeUnit;
 
 /**
  * Unit test for simple App.
  */
-public class AppTest 
-{
-    static WebDriver driver;
-    static AppiumServiceBuilder serviceBuilder;
-    static AppiumDriverLocalService server;
+public class AppTest {
+    static AndroidDriver driver;
 
     @BeforeClass
     public static void setUp() throws MalformedURLException {
 
-        serviceBuilder = new AppiumServiceBuilder();
-        serviceBuilder.usingAnyFreePort();
-        server = AppiumDriverLocalService.buildService(serviceBuilder);
-        server.start();
 
         //Created object of DesiredCapabilities class
         DesiredCapabilities capabilities = new DesiredCapabilities();
@@ -53,8 +44,19 @@ public class AppTest
         //For Android calculator app, Activity name is 'com.android.calculator2.Calculator'
         capabilities.setCapability("appActivity", "com.android.calculator2.Calculator");
 
+//        capabilities.setCapability("browserName", "android");
+//        capabilities.setCapability("browserVersion", "8.1");
+
+        HashMap<String, Object> selenoidOptions = new HashMap<String, Object>();
+        selenoidOptions.put("enableVNC", true);
+        selenoidOptions.put("enableVideo", false);
+        selenoidOptions.put("sessionTimeout", "120s");
+        selenoidOptions.put("browserName", "android");
+        selenoidOptions.put("browserVersion", "8.1");
+        capabilities.setCapability("selenoid:options", selenoidOptions);
+
         // Initialize the driver object with the URL to Appium Server and pass capabilities
-        driver = new RemoteWebDriver(server.getUrl(), capabilities);
+        driver = new AndroidDriver<>(new URL("http://127.0.0.1:4444/wd/hub"), capabilities);
         driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
     }
 
@@ -62,10 +64,30 @@ public class AppTest
     public void Sum() {
 
         System.out.println("Calculate sum of two numbers");
+        try {
+            Thread.sleep(10000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         //Locate elements using By.name() to enter data and click +/= buttons
         driver.findElement(By.id("com.android.calculator2:id/digit_1")).click();
         driver.findElement(By.id("com.android.calculator2:id/op_add")).click();
         driver.findElement(By.id("com.android.calculator2:id/digit_2")).click();
+        driver.findElement(By.id("com.android.calculator2:id/eq")).click();
+
+        driver.findElement(By.id("com.android.calculator2:id/digit_3")).click();
+        driver.findElement(By.id("com.android.calculator2:id/op_add")).click();
+        driver.findElement(By.id("com.android.calculator2:id/digit_4")).click();
+        driver.findElement(By.id("com.android.calculator2:id/eq")).click();
+
+        driver.findElement(By.id("com.android.calculator2:id/digit_5")).click();
+        driver.findElement(By.id("com.android.calculator2:id/op_add")).click();
+        driver.findElement(By.id("com.android.calculator2:id/digit_6")).click();
+        driver.findElement(By.id("com.android.calculator2:id/eq")).click();
+
+        driver.findElement(By.id("com.android.calculator2:id/digit_7")).click();
+        driver.findElement(By.id("com.android.calculator2:id/op_add")).click();
+        driver.findElement(By.id("com.android.calculator2:id/digit_8")).click();
         driver.findElement(By.id("com.android.calculator2:id/eq")).click();
 
         // Get the result text
@@ -78,9 +100,6 @@ public class AppTest
 
     @AfterClass
     public static void End() {
-        try {
-            driver.quit();
-        } catch (Exception ign) {}
-        server.stop();
+        driver.quit();
     }
 }
