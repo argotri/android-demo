@@ -78,7 +78,7 @@ public class AppTest {
         // capabilities.setCapability("selenoid:options", selenoidOptions);
 
         // Initialize the driver object with the URL to Appium Server and pass capabilities
-        driver = new AndroidDriver<>(new URL("http://127.0.0.1:4723/wd/hub"), capabilities);
+        driver = new AndroidDriver<>(server.getUrl(), capabilities);
         driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
     }
 
