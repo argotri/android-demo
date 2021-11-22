@@ -31,10 +31,12 @@ public class AppTest {
 
         //The kind of mobile device or emulator to use - iPad Simulator, iPhone Retina 4-inch, Android Emulator, Galaxy S4 etc
         //Find your device name by running command 'adb devices' from command prompt
-//        capabilities.setCapability("deviceName", "WKZLMJLB7L8TR8SW");
+       capabilities.setCapability("deviceName", "device");
 
         //Which mobile OS platform to use - iOS, Android, or FirefoxOS
         capabilities.setCapability("platformName", "Android");
+//                 caps.setCapability("platformName", "Android");
+        caps.setCapability("platformVersion", "9.0");
 
         //Java package of the Android app you want to run- Ex: com.example.android.myApp
         //For Android calculator app, package name is 'com.android.calculator2'
@@ -47,16 +49,16 @@ public class AppTest {
 //        capabilities.setCapability("browserName", "android");
 //        capabilities.setCapability("browserVersion", "8.1");
 
-        HashMap<String, Object> selenoidOptions = new HashMap<String, Object>();
-        selenoidOptions.put("enableVNC", true);
-        selenoidOptions.put("enableVideo", false);
-        selenoidOptions.put("sessionTimeout", "120s");
-        selenoidOptions.put("browserName", "android");
-        selenoidOptions.put("browserVersion", "8.1");
-        capabilities.setCapability("selenoid:options", selenoidOptions);
+        // HashMap<String, Object> selenoidOptions = new HashMap<String, Object>();
+        // selenoidOptions.put("enableVNC", true);
+        // selenoidOptions.put("enableVideo", false);
+        // selenoidOptions.put("sessionTimeout", "120s");
+        // selenoidOptions.put("browserName", "android");
+        // selenoidOptions.put("browserVersion", "8.1");
+        // capabilities.setCapability("selenoid:options", selenoidOptions);
 
         // Initialize the driver object with the URL to Appium Server and pass capabilities
-        driver = new AndroidDriver<>(new URL("http://127.0.0.1:4444/wd/hub"), capabilities);
+        driver = new AndroidDriver<>(new URL("http://127.0.0.1:4723/wd/hub"), capabilities);
         driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
     }
 
