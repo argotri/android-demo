@@ -36,7 +36,7 @@ public class AppTest {
         //Which mobile OS platform to use - iOS, Android, or FirefoxOS
         capabilities.setCapability("platformName", "Android");
 //                 caps.setCapability("platformName", "Android");
-        caps.setCapability("platformVersion", "9.0");
+        capabilities.setCapability("platformVersion", "9.0");
 
         //Java package of the Android app you want to run- Ex: com.example.android.myApp
         //For Android calculator app, package name is 'com.android.calculator2'
