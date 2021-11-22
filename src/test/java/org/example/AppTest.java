@@ -35,13 +35,13 @@ public class AppTest {
         // Use any port, in case the default 4723 is already taken (maybe by another Appium server)
         serviceBuilder.usingAnyFreePort();
         // Tell serviceBuilder where node is installed. Or set this path in an environment variable named NODE_PATH
-        serviceBuilder.usingDriverExecutable(new File("/Users/jonahss/.nvm/versions/node/v12.1.0/bin/node"));
+        // serviceBuilder.usingDriverExecutable(new File("/Users/jonahss/.nvm/versions/node/v12.1.0/bin/node"));
         // Tell serviceBuilder where Appium is installed. Or set this path in an environment variable named APPIUM_PATH
-        serviceBuilder.withAppiumJS(new File("/Users/jonahss/.nvm/versions/node/v12.1.0/bin/appium"));
+        // serviceBuilder.withAppiumJS(new File("/Users/jonahss/.nvm/versions/node/v12.1.0/bin/appium"));
         // The XCUITest driver requires that a path to the Carthage binary is in the PATH variable. I have this set for my shell, but the Java process does not see it. It can be inserted here.
-        HashMap<String, String> environment = new HashMap();
-        environment.put("PATH", "/usr/local/bin:" + System.getenv("PATH"));
-        serviceBuilder.withEnvironment(environment);
+        // HashMap<String, String> environment = new HashMap();
+        // environment.put("PATH", "/usr/local/bin:" + System.getenv("PATH"));
+        // serviceBuilder.withEnvironment(environment);
 
         server = AppiumDriverLocalService.buildService(serviceBuilder);
         server.start();
